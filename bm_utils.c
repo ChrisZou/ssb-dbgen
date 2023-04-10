@@ -32,13 +32,19 @@
 #include <errno.h>
 #include <string.h>
 
+#define _LARGEFILE64_SOURCE
+#define _FILE_OFFSET_BITS 64
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 #ifdef HP
 #include <strings.h>
 #endif            /* HP */
 #include <ctype.h>
 #include <math.h>
 #ifndef _POSIX_SOURCE
-#include <malloc.h>
+#include <stdlib.h>
 #endif /* POSIX_SOURCE */
 
 #include <fcntl.h>
@@ -130,7 +136,7 @@ yes_no(char *prompt)
 #pragma warning(default:4127)
 #endif 
         printf("%s [Y/N]: ", prompt);
-        gets(reply);
+        fgets(reply, sizeof(reply), stdin);
         switch (*reply)
             {
             case 'y':
@@ -395,7 +401,7 @@ tbl_open(int tbl, char *mode)
 
 	/*cheng: Betty mentioned about write mode problem here, added 066*/
       retcode =
-		  open(fullpath, ((*mode == 'r')?O_RDONLY:O_WRONLY)|O_CREAT|O_LARGEFILE,0644);
+		  open(fullpath, ((*mode == 'r')?O_RDONLY:O_WRONLY)|O_CREAT,0644);
         f = fdopen(retcode, mode);
 #else
         f = fopen(fullpath, mode);

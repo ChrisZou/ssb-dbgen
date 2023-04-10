@@ -915,6 +915,7 @@ main (int ac, char **av)
 {
 	int i;
 	
+	printf("main");
 	table = (1 << CUST) |
 		(1 << SUPP) |
 		(1 << NATION) |

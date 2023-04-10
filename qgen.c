@@ -1,3 +1,6 @@
+#include <unistd.h>
+#include <sys/types.h>
+
 /*
  * Sccsid:     @(#)qgen.c	2.1.8.2
  * qgen.c -- routines to convert query templates to executable query
